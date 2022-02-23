@@ -1,0 +1,14 @@
+overwrite: true
+# watch: true
+schema: 'http://localhost:8080'
+documents: './**/*.graphql'
+generates:
+  generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-urql
+    config:
+  generated/graphql.schema.ts:
+    plugins:
+      - urql-introspection

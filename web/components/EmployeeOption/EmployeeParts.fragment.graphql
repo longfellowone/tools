@@ -1,0 +1,4 @@
+fragment EmployeeParts on Employee {
+  id
+  employee
+}

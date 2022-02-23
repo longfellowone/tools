@@ -1,0 +1,88 @@
+https://fauna.com/blog/detecting-leaked-authentication-tokens-in-fql
+https://github.com/fauna-labs/fauna-blueprints/tree/main/official/auth/refresh-tokens-advanced/fauna/src
+
+create a new refresh token
+
+insert into session (jti, user_id, exp)
+
+("rt 01", "user 01" , 3pm)
+
+
+// 1. Legitimate Client has RT1, and RT1 is leaked to or stolen by Malicious Client.
+
+// 2. Legitimate Client uses RT1 to get a new RT/AT pair.
+
+// 3. The Authorization Server returns RT2/AT2.
+
+return "rt 02"
+
+insert into session (jti, user_id, exp)
+
+("rt 02", "user 01" , 4pm)
+
+// 4. Malicious Client then attempts to use RT1 to get an access token. The Authorization Server recognizes that RT1 is being reused, and immediately invalidates the RT family, including RT2 because 	the reappearance of RT1 is indicative of token leakage. It is important that RT2 is also invalidated to prevent any subsequent damage, such as the attacker gaining access to that token.
+
+// 5. The Authorization Server returns an Access Denied response to Malicious Client.
+
+// 6. AT2 Expires and Legitimate Client attempts to use RT2 to request a new RT/AT pair.
+
+// 7. The Authorization Server returns an Access Denied response to Legitimate Client. Re-authentication is required.
+
+
+
+
+
+----
+
+on refresh token request
+
+extract signature from token
+
+check for signature in sessions, check if active (session table should have signature, user_id, active, ip_address)
+
+if token in session is no longer active { // Detected refresh token reuse
+
+	start transaction
+
+	delete (now reused) refresh token from sessions (as its no longer needed) ? confirm if this is correct
+
+	add signature, exp to revoked_tokens
+
+	commit transaction
+}
+
+validate refresh token
+
+create new session
+
+issue new acccess and refresh tokens
+
+---
+
+
+access tokens are revoked on logout (active = false)
+
+
+----
+
+everytime we create a new refresh token, we create a new session
+
+Insert jti, exp, fingerprint into sessions
+
+----
+
+https://cs.github.com/jazzband/djangorestframework-simplejwt/blob/1ea72de4e276afbb61b2cd83b32d352c8ca6fb8d/tests/test_token_blacklist.py?q=RefreshToken.for_user#L65
+
+https://cs.github.com/jazzband/djangorestframework-simplejwt/blob/1ea72de4e276afbb61b2cd83b32d352c8ca6fb8d/rest_framework_simplejwt/token_blacklist/models.py#L5
+
+request new refresh token
+
+verify token
+
+extract jit
+
+check if jit in revoked_tokens, if true, how do I reject all currently issued token?
+
+add jit, and exp to revoked_tokens
+
+issue new tokens

@@ -1,0 +1,9 @@
+fragment ToolParts on Tool {
+  id
+  tagged
+  brand
+  tool
+  assignedTo {
+    ...EmployeeParts
+  }
+}

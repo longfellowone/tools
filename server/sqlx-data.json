@@ -30,8 +30,40 @@
       ]
     }
   },
-  "ba9750648aec17ecc6583aa549eacc93a088b654f3f6bbe708f34f511d2b5f98": {
-    "query": "\n            select id, employee_id, tagged, brand, tool\n            from tool\n            order by tool, brand\n            ",
+  "152b040c415099ded6d0f38eb44c46a40ccccdd921e1a95b3deda314b21ffea0": {
+    "query": "\n            select id, first_name, last_name\n            from employee\n            where id = any ($1)\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 1,
+          "name": "first_name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "last_name",
+          "type_info": "Text"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "UuidArray"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "2615568fae251f10d8d8bf736d57b89aad659b3abedb775b3c64b153451dd440": {
+    "query": "\n            select id, employee_id, tagged, brand, tool\n            from tool\n            order by tool, brand, tagged\n            ",
     "describe": {
       "columns": [
         {
@@ -62,6 +94,51 @@
       ],
       "parameters": {
         "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "d5b4639e444e798e096ccfe0209acb9bf986ac344f185d979f039ac8d8c366d5": {
+    "query": "\n            update tool\n            set employee_id = $1\n            where id = $2\n            returning id, employee_id, tagged, brand, tool\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 1,
+          "name": "employee_id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 2,
+          "name": "tagged",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 3,
+          "name": "brand",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "tool",
+          "type_info": "Text"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Uuid",
+          "Uuid"
+        ]
       },
       "nullable": [
         false,

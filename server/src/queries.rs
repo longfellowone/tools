@@ -3,6 +3,8 @@ use crate::resolvers::employee::Employee;
 use crate::resolvers::tool::Tool;
 use async_graphql::{Context, Object};
 use sqlx::PgPool;
+use std::thread::sleep;
+use std::time::Duration;
 use uuid::Uuid;
 
 pub struct QueryRoot;
@@ -30,6 +32,8 @@ impl QueryRoot {
 
     pub async fn employees(&self, ctx: &Context<'_>) -> Vec<Employee> {
         let pool = ctx.data_unchecked::<PgPool>();
+
+        // sleep(Duration::from_secs(5));
 
         let employees = sqlx::query_as!(
             Employee,

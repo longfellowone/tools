@@ -27,12 +27,18 @@ impl PostgresConfig {
     }
 
     fn connect_options(&self) -> PgConnectOptions {
+        let ssl_mode = if self.sslmode {
+            PgSslMode::Require
+        } else {
+            PgSslMode::Prefer
+        };
+
         PgConnectOptions::new()
             .username(&self.user)
             .password(&self.password)
             .host(&self.host)
             .port(self.port)
-            .ssl_mode(PgSslMode::Prefer)
+            .ssl_mode(ssl_mode)
     }
 
     fn connect_options_with_db(&self) -> PgConnectOptions {

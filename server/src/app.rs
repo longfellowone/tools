@@ -2,7 +2,7 @@ use crate::config::Configuration;
 use crate::graphql;
 use anyhow::Context;
 use axum::http::Method;
-use axum::routing::get;
+use axum::routing::post;
 use axum::{AddExtensionLayer, Router};
 use serde::Deserialize;
 use sqlx::PgPool;
@@ -39,8 +39,9 @@ pub async fn run(config: AppConfig, pool: PgPool) -> anyhow::Result<()> {
         .layer(AddExtensionLayer::new(config))
         .layer(AddExtensionLayer::new(schema));
 
+    // get(graphql::playground)
     let app = Router::new()
-        .route("/", get(graphql::playground).post(graphql::handler))
+        .route("/", post(graphql::handler))
         .layer(extensions);
 
     axum::Server::bind(&addr.parse()?)

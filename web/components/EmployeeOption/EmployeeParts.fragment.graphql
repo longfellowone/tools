@@ -1,4 +1,5 @@
 fragment EmployeeParts on Employee {
   id
-  employee
+  firstName
+  lastName
 }

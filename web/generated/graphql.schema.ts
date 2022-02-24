@@ -4,15 +4,36 @@ export default {
     "queryType": {
       "name": "QueryRoot"
     },
-    "mutationType": null,
+    "mutationType": {
+      "name": "MutationRoot"
+    },
     "subscriptionType": null,
     "types": [
+      {
+        "kind": "OBJECT",
+        "name": "AssignToolPayload",
+        "fields": [
+          {
+            "name": "tool",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Tool",
+                "ofType": null
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
       {
         "kind": "OBJECT",
         "name": "Employee",
         "fields": [
           {
-            "name": "employee",
+            "name": "firstName",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -32,6 +53,47 @@ export default {
               }
             },
             "args": []
+          },
+          {
+            "name": "lastName",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MutationRoot",
+        "fields": [
+          {
+            "name": "assignTool",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AssignToolPayload",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
           }
         ],
         "interfaces": []

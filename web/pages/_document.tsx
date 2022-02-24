@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from "next/document"
 
 export default function Document() {
   return (
@@ -8,8 +8,9 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter&display=option"
           rel="stylesheet"
         />
+        <meta name="theme-color" content="#18181b"></meta>
       </Head>
-      <body>
+      <body className="bg-zinc-900 text-zinc-200">
         <Main />
         <NextScript />
       </body>

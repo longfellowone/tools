@@ -10,7 +10,7 @@ import schema from "../generated/graphql.schema"
 
 const Index: NextPage = () => {
   return (
-    <div className="text-sm">
+    <div>
       <ToolList />
     </div>
   )
@@ -18,7 +18,7 @@ const Index: NextPage = () => {
 
 export default withUrqlClient((_ssrExchange, _ctx) => {
   return {
-    url: "http://192.168.0.91:8080",
+    url: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
     exchanges: [
       devtoolsExchange,
       dedupExchange,

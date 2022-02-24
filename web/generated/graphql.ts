@@ -13,23 +13,33 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /**
-   * A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as Strings
-   * within GraphQL. UUIDs are used to assign unique identifiers to entities without requiring a central
-   * allocating authority.
-   *
-   * # References
-   *
-   * * [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
-   * * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
-   */
-  UUID: any;
+};
+
+export type AssignToolInput = {
+  employeeId: Scalars['ID'];
+  toolId: Scalars['ID'];
+};
+
+export type AssignToolPayload = {
+  __typename?: 'AssignToolPayload';
+  tool: Tool;
 };
 
 export type Employee = {
   __typename?: 'Employee';
-  employee: Scalars['String'];
-  id: Scalars['UUID'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+};
+
+export type MutationRoot = {
+  __typename?: 'MutationRoot';
+  assignTool: AssignToolPayload;
+};
+
+
+export type MutationRootAssignToolArgs = {
+  input: AssignToolInput;
 };
 
 export type QueryRoot = {
@@ -50,21 +60,29 @@ export type Tool = {
 export type EmployeeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmployeeListQuery = { __typename?: 'QueryRoot', employees: Array<{ __typename?: 'Employee', id: any, employee: string }> };
+export type EmployeeListQuery = { __typename?: 'QueryRoot', employees: Array<{ __typename?: 'Employee', id: string, firstName: string, lastName: string }> };
 
-export type EmployeePartsFragment = { __typename?: 'Employee', id: any, employee: string };
+export type AssignToolMutationVariables = Exact<{
+  input: AssignToolInput;
+}>;
 
-export type ToolPartsFragment = { __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: any, employee: string } };
+
+export type AssignToolMutation = { __typename?: 'MutationRoot', assignTool: { __typename?: 'AssignToolPayload', tool: { __typename?: 'Tool', id: string, assignedTo: { __typename?: 'Employee', id: string } } } };
+
+export type EmployeePartsFragment = { __typename?: 'Employee', id: string, firstName: string, lastName: string };
+
+export type ToolPartsFragment = { __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: string, firstName: string, lastName: string } };
 
 export type ToolListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ToolListQuery = { __typename?: 'QueryRoot', tools: Array<{ __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: any, employee: string } }> };
+export type ToolListQuery = { __typename?: 'QueryRoot', tools: Array<{ __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: string, firstName: string, lastName: string } }> };
 
 export const EmployeePartsFragmentDoc = gql`
     fragment EmployeeParts on Employee {
   id
-  employee
+  firstName
+  lastName
 }
     `;
 export const ToolPartsFragmentDoc = gql`
@@ -88,6 +106,22 @@ export const EmployeeListDocument = gql`
 
 export function useEmployeeListQuery(options?: Omit<Urql.UseQueryArgs<EmployeeListQueryVariables>, 'query'>) {
   return Urql.useQuery<EmployeeListQuery>({ query: EmployeeListDocument, ...options });
+};
+export const AssignToolDocument = gql`
+    mutation AssignTool($input: AssignToolInput!) {
+  assignTool(input: $input) {
+    tool {
+      id
+      assignedTo {
+        id
+      }
+    }
+  }
+}
+    `;
+
+export function useAssignToolMutation() {
+  return Urql.useMutation<AssignToolMutation, AssignToolMutationVariables>(AssignToolDocument);
 };
 export const ToolListDocument = gql`
     query ToolList {

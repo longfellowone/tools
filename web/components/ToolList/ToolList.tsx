@@ -12,7 +12,7 @@ const AssemblyItemDetails: NextPage<Props> = () => {
   if (error) return <div>Error: something went wrong.</div>
 
   return (
-    <div className="p-2">
+    <div className="p-1 pt-2">
       {data.tools.map((tool) => (
         <ToolListItem key={tool.id} tool={tool} />
       ))}

@@ -1,32 +1,51 @@
 import { NextPage } from "next"
-import { EmployeePartsFragment, useEmployeeListQuery } from "../../generated/graphql"
+import { SubmitHandler, useForm } from "react-hook-form"
+import {
+  ToolPartsFragment,
+  useAssignToolMutation,
+  useEmployeeListQuery,
+} from "../../generated/graphql"
 
 interface Props {
-  employee: EmployeePartsFragment
+  tool: ToolPartsFragment
 }
 
-const EmloyeeOption: NextPage<Props> = ({ employee: assignedEmployee }) => {
-  const [{ data, error }] = useEmployeeListQuery()
+interface FormValues {
+  employeeId: string
+}
 
-  // return (
-  //   <>
-  //     <div className="bg-yellow-200">{employee.employee}</div>
-  //   </>
-  // )
+const EmloyeeOption: NextPage<Props> = ({ tool }) => {
+  const { register, handleSubmit } = useForm<FormValues>()
+
+  const [{ data }] = useEmployeeListQuery()
+  const [mutateResult, mutate] = useAssignToolMutation()
+
+  if (!data) return null
+  if (mutateResult.error) return <div className="w-28 py-3 text-center text-red-500">Error</div>
+  if (mutateResult.fetching) return <div className="w-28 py-3 text-center">Saving...</div>
+
+  const onSubmit: SubmitHandler<FormValues> = (form) => {
+    mutate({ input: { toolId: tool.id, employeeId: form.employeeId } })
+  }
 
   return (
-    <div>
+    <form onChange={handleSubmit(onSubmit)}>
       <select
-        id="location"
-        name="location"
-        className="w-44 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-        defaultValue={assignedEmployee.employee}
+        {...register("employeeId")}
+        id="employeeId"
+        name="employeeId"
+        className="w-28 rounded-md border-none bg-zinc-800 py-3 pl-4
+                   focus:outline-none focus:ring focus:ring-blue-500"
+        defaultValue={tool.assignedTo.id}
       >
         {data?.employees.map((employee) => (
-          <option key={employee.id}>{employee.employee}</option>
+          <option key={employee.id} value={employee.id}>
+            {employee.firstName}
+          </option>
         ))}
       </select>
-    </div>
+    </form>
   )
 }
+
 export default EmloyeeOption

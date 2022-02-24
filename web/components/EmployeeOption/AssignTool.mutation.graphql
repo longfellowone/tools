@@ -1,0 +1,10 @@
+mutation AssignTool($input: AssignToolInput!) {
+  assignTool(input: $input) {
+    tool {
+      id
+      assignedTo {
+        id
+      }
+    }
+  }
+}

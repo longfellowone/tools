@@ -1,4 +1,6 @@
+use crate::loaders::employee::EmployeeLoader;
 use crate::resolvers::employee::Employee;
+use async_graphql::dataloader::{DataLoader, Loader};
 use async_graphql::{Context, Object, SimpleObject, ID};
 use sqlx::PgPool;
 use uuid::Uuid;
@@ -30,13 +32,12 @@ impl Tool {
     }
 
     async fn assigned_to(&self, ctx: &Context<'_>) -> Employee {
-        let _pool = ctx.data_unchecked::<PgPool>();
+        let employee = ctx
+            .data_unchecked::<DataLoader<EmployeeLoader>>()
+            .load_one(self.employee_id)
+            .await
+            .unwrap();
 
-        // TODO: Needs to be loader
-        Employee {
-            id: Uuid::new_v4(),
-            first_name: "First".to_string(),
-            last_name: "Last".to_string(),
-        }
+        employee.unwrap()
     }
 }

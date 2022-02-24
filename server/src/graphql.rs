@@ -1,5 +1,8 @@
 use crate::app::AppConfig;
+use crate::loaders::employee::EmployeeLoader;
+use crate::mutations::MutationRoot;
 use crate::queries::QueryRoot;
+use async_graphql::dataloader::DataLoader;
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{EmptyMutation, EmptySubscription, Schema};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
@@ -10,12 +13,15 @@ use axum::response;
 use axum::response::IntoResponse;
 use sqlx::PgPool;
 
-pub type GraphqlSchema = Schema<QueryRoot, EmptyMutation, EmptySubscription>;
+pub type GraphqlSchema = Schema<QueryRoot, MutationRoot, EmptySubscription>;
 
 pub fn schema(pool: PgPool, config: AppConfig) -> GraphqlSchema {
-    Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
+    let employee_loader = DataLoader::new(EmployeeLoader::new(pool.clone()), tokio::spawn);
+
+    Schema::build(QueryRoot, MutationRoot, EmptySubscription)
         .data(pool)
         .data(config)
+        .data(employee_loader)
         .finish()
 }
 

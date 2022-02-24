@@ -18,7 +18,7 @@ impl QueryRoot {
             r#"
             select id, employee_id, tagged, brand, tool
             from tool
-            order by tool, brand
+            order by tool, brand, tagged
             "#
         )
         .fetch_all(pool)

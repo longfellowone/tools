@@ -29,6 +29,6 @@ pub async fn handler(schema: Extension<GraphqlSchema>, req: GraphQLRequest) -> G
     schema.execute(req.into_inner()).await.into()
 }
 
-pub async fn playground() -> impl IntoResponse {
-    response::Html(playground_source(GraphQLPlaygroundConfig::new("/")))
-}
+// pub async fn playground() -> impl IntoResponse {
+//     response::Html(playground_source(GraphQLPlaygroundConfig::new("/")))
+// }

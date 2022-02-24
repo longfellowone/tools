@@ -20,7 +20,6 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
   const [{ data }] = useEmployeeListQuery()
   const [mutateResult, mutate] = useAssignToolMutation()
 
-  if (!data) return null
   if (mutateResult.error) return <div className="w-28 py-3 text-center text-red-500">Error</div>
   if (mutateResult.fetching) return <div className="w-28 py-3 text-center">Saving...</div>
 
@@ -36,7 +35,7 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
         name="employeeId"
         className="w-28 rounded-md border-none bg-zinc-800 py-3 pl-4
                    focus:outline-none focus:ring focus:ring-blue-500"
-        defaultValue={tool.assignedTo.id}
+        value={tool.assignedTo.id}
       >
         {data?.employees.map((employee) => (
           <option key={employee.id} value={employee.id}>

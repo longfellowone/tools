@@ -7,10 +7,10 @@ interface Props {
 
 const Tool: NextPage<Props> = ({ tool }) => {
   return (
-    <div className="flex flex-1 items-center">
+    <div className="flex flex-grow items-center py-3">
       <div className="w-20">{tool.tool}</div>
       <div className="w-24 text-center">{tool.brand}</div>
-      <div className="flex-1 pr-2 text-right">{tool.tagged}</div>
+      <div className="flex-grow text-right">{tool.tagged}</div>
     </div>
   )
 }

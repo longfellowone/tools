@@ -35,7 +35,8 @@ impl Tool {
         // TODO: Needs to be loader
         Employee {
             id: Uuid::new_v4(),
-            employee: "employee 1".to_string(),
+            first_name: "First".to_string(),
+            last_name: "Last".to_string(),
         }
     }
 }

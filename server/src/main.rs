@@ -15,6 +15,8 @@ async fn main() -> anyhow::Result<()> {
 
     let pool = config.postgres.pool().await;
 
+    sqlx::migrate!().run(&pool).await?;
+
     app::run(config.app, pool).await?;
 
     Ok(())

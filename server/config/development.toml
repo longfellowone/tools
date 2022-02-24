@@ -1,9 +1,6 @@
 [app]
 host = "0.0.0.0"
 port = 8080
-iss = "http://localhost:8080"
-access_token_expires_in = 15
-refresh_token_expires_in = 60
 
 [postgres]
 host = "localhost"
@@ -12,7 +9,3 @@ user = "postgres"
 password = "postgres"
 database = "postgres"
 sslmode = "false"
-
-[google]
-jwk_url = "https://www.googleapis.com/oauth2/v3/certs"
-iss = "https://accounts.google.com"

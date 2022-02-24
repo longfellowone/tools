@@ -1,0 +1,75 @@
+{
+  "db": "PostgreSQL",
+  "05d0d904ab2d67226baafcd8c5f64497496ddbca1c0e22b550e7b7fb6d705246": {
+    "query": "\n            select id, first_name, last_name\n            from employee\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 1,
+          "name": "first_name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "last_name",
+          "type_info": "Text"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "ba9750648aec17ecc6583aa549eacc93a088b654f3f6bbe708f34f511d2b5f98": {
+    "query": "\n            select id, employee_id, tagged, brand, tool\n            from tool\n            order by tool, brand\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 1,
+          "name": "employee_id",
+          "type_info": "Uuid"
+        },
+        {
+          "ordinal": 2,
+          "name": "tagged",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 3,
+          "name": "brand",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "tool",
+          "type_info": "Text"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  }
+}

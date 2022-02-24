@@ -15,7 +15,11 @@ impl QueryRoot {
         let tools = sqlx::query_as!(
             Tool,
             // language=PostgreSQL
-            r#"select * from tool"#
+            r#"
+            select id, employee_id, tagged, brand, tool
+            from tool
+            order by tool, brand
+            "#
         )
         .fetch_all(pool)
         .await
@@ -31,7 +35,8 @@ impl QueryRoot {
             Employee,
             // language=PostgreSQL
             r#"
-            select * from employee
+            select id, first_name, last_name
+            from employee
             "#
         )
         .fetch_all(pool)

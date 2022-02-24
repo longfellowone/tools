@@ -21,7 +21,7 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
   const [mutateResult, mutate] = useAssignToolMutation()
 
   if (mutateResult.error) return <div className="w-28 py-3 text-center text-red-500">Error</div>
-  if (mutateResult.fetching) return <div className="w-28 py-3 text-center">Saving...</div>
+  if (mutateResult.fetching) return <div className="w-28 py-3 pl-4">Saving...</div>
 
   const onSubmit: SubmitHandler<FormValues> = (form) => {
     mutate({ input: { toolId: tool.id, employeeId: form.employeeId } })

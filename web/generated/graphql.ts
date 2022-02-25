@@ -57,10 +57,7 @@ export type Tool = {
   tool: Scalars['String'];
 };
 
-export type EmployeeListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type EmployeeListQuery = { __typename?: 'QueryRoot', employees: Array<{ __typename?: 'Employee', id: string, firstName: string, lastName: string }> };
+export type ToolPartsFragment = { __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: string, firstName: string, lastName: string } };
 
 export type AssignToolMutationVariables = Exact<{
   input: AssignToolInput;
@@ -69,9 +66,12 @@ export type AssignToolMutationVariables = Exact<{
 
 export type AssignToolMutation = { __typename?: 'MutationRoot', assignTool: { __typename?: 'AssignToolPayload', tool: { __typename?: 'Tool', id: string, assignedTo: { __typename?: 'Employee', id: string } } } };
 
-export type EmployeePartsFragment = { __typename?: 'Employee', id: string, firstName: string, lastName: string };
+export type EmployeeListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type ToolPartsFragment = { __typename?: 'Tool', id: string, tagged: string, brand: string, tool: string, assignedTo: { __typename?: 'Employee', id: string, firstName: string, lastName: string } };
+
+export type EmployeeListQuery = { __typename?: 'QueryRoot', employees: Array<{ __typename?: 'Employee', id: string, firstName: string, lastName: string }> };
+
+export type EmployeePartsFragment = { __typename?: 'Employee', id: string, firstName: string, lastName: string };
 
 export type ToolListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -96,17 +96,6 @@ export const ToolPartsFragmentDoc = gql`
   }
 }
     ${EmployeePartsFragmentDoc}`;
-export const EmployeeListDocument = gql`
-    query EmployeeList {
-  employees {
-    ...EmployeeParts
-  }
-}
-    ${EmployeePartsFragmentDoc}`;
-
-export function useEmployeeListQuery(options?: Omit<Urql.UseQueryArgs<EmployeeListQueryVariables>, 'query'>) {
-  return Urql.useQuery<EmployeeListQuery>({ query: EmployeeListDocument, ...options });
-};
 export const AssignToolDocument = gql`
     mutation AssignTool($input: AssignToolInput!) {
   assignTool(input: $input) {
@@ -122,6 +111,17 @@ export const AssignToolDocument = gql`
 
 export function useAssignToolMutation() {
   return Urql.useMutation<AssignToolMutation, AssignToolMutationVariables>(AssignToolDocument);
+};
+export const EmployeeListDocument = gql`
+    query EmployeeList {
+  employees {
+    ...EmployeeParts
+  }
+}
+    ${EmployeePartsFragmentDoc}`;
+
+export function useEmployeeListQuery(options?: Omit<Urql.UseQueryArgs<EmployeeListQueryVariables>, 'query'>) {
+  return Urql.useQuery<EmployeeListQuery>({ query: EmployeeListDocument, ...options });
 };
 export const ToolListDocument = gql`
     query ToolList {

@@ -1,6 +1,6 @@
 import { NextPage } from "next"
-import { useToolListQuery } from "../../generated/graphql"
-import ToolListItem from "../ToolListItem/ToolItem"
+import { useToolListQuery } from "../generated/graphql"
+import ToolListItem from "./ToolItem"
 
 interface Props {}
 

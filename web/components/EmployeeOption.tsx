@@ -4,7 +4,7 @@ import {
   ToolPartsFragment,
   useAssignToolMutation,
   useEmployeeListQuery,
-} from "../../generated/graphql"
+} from "../generated/graphql"
 
 interface Props {
   tool: ToolPartsFragment

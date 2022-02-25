@@ -1,12 +1,11 @@
-import { devtoolsExchange } from "@urql/devtools"
 import { cacheExchange } from "@urql/exchange-graphcache"
-import { refocusExchange } from "@urql/exchange-refocus"
-import { NextPage } from "next"
-import { withUrqlClient } from "next-urql"
-import { dedupExchange, fetchExchange } from "urql"
-import ToolList from "../components/ToolList/ToolList"
-
+import { GetServerSideProps, NextPage } from "next"
+import { initUrqlClient, withUrqlClient } from "next-urql"
+import { dedupExchange, fetchExchange, ssrExchange } from "urql"
+import ToolList from "../components/ToolList"
+import { urqlClientConfig } from "../lib/urqlClient"
 import schema from "../generated/graphql.schema"
+import { EmployeeListDocument, ToolListDocument } from "../generated/graphql"
 
 const Index: NextPage = () => {
   return (
@@ -16,70 +15,26 @@ const Index: NextPage = () => {
   )
 }
 
-export default withUrqlClient((_ssrExchange, _ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const ssrCache = ssrExchange({ isClient: false })
+  const client = initUrqlClient(
+    {
+      url: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
+      exchanges: [dedupExchange, cacheExchange({ schema }), ssrCache, fetchExchange],
+    },
+    false
+  )
+
+  await client?.query(EmployeeListDocument).toPromise()
+  await client?.query(ToolListDocument).toPromise()
+
+  // Use generated functions???
+
   return {
-    url: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
-    exchanges: [
-      devtoolsExchange,
-      dedupExchange,
-      refocusExchange(),
-      cacheExchange({ schema }),
-      fetchExchange,
-    ],
+    props: {
+      urqlState: ssrCache.extractData(),
+    },
   }
-})(Index)
+}
 
-// const Estimates: NextPage = () => {
-//   const [result] = useEstimateQuery()
-
-//   if (!result.data) return <div>Loading...</div>
-
-//   if (result.error) return <div>Something went wrong.</div>
-
-//   const estimateTotal = result.data?.estimate.assemblies.reduce((total, assembly) => {
-//     const assemblyTotal = assembly.items.reduce(
-//       (total, item) => total + item.quantity * item.cost,
-//       0
-//     )
-
-//     return total + assembly.quantity * assemblyTotal
-//   }, 0)
-
-//   return (
-//     <>
-//       <AddAssemblyToEstimateForm />
-//       <div>Estimate Total: {estimateTotal}</div>
-//       {result.data?.estimate.assemblies.map((assembly) => {
-//         const assemblyTotal = assembly.items.reduce(
-//           (total, item) => total + item.quantity * item.cost,
-//           0
-//         )
-
-//         return (
-//           <div key={assembly.id}>
-//             <div>
-//               {assembly.assembly} - Quantity: {assembly.quantity} - Assembly Total: {assemblyTotal}
-//             </div>
-//             <div>
-//               {assembly.items.map((item) => (
-//                 <AssemblyItemDetails key={item.id} item={item} />
-//               ))}
-//             </div>
-//           </div>
-//         )
-//       })}
-//     </>
-//   )
-// }
-
-// const optimistic = {
-//   addAssemblyToEstimate: (variables, cache, info) => {
-//     console.log(variables, cache, info)
-
-//     return {
-//       __typename: 'Estimate',
-//       id: '00000000-0000-0000-0000-000000000003',
-//       cost: '999',
-//     }
-//   },
-// }
+export default withUrqlClient(urqlClientConfig, { ssr: false })(Index)

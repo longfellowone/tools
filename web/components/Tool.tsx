@@ -1,5 +1,5 @@
 import { NextPage } from "next"
-import { EmployeePartsFragment, ToolPartsFragment } from "../../generated/graphql"
+import { ToolPartsFragment } from "../generated/graphql"
 
 interface Props {
   tool: ToolPartsFragment

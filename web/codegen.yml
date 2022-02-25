@@ -1,7 +1,9 @@
 overwrite: true
 # watch: true
 schema: "http://0.0.0.0:8080"
-documents: "./**/*.graphql"
+documents:
+  - "./**/*.graphql"
+  - "./**/*.tsx"
 generates:
   generated/graphql.ts:
     plugins:

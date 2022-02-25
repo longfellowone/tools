@@ -1,4 +1,3 @@
-use async_graphql::Context;
 use serde::Deserialize;
 use sqlx::postgres::{PgConnectOptions, PgPoolOptions, PgSslMode};
 use sqlx::{Connection, PgConnection, PgPool};

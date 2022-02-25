@@ -2,7 +2,6 @@ use crate::app::AppConfig;
 use crate::postgres::PostgresConfig;
 use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
-use std::env;
 
 #[derive(Debug, Deserialize)]
 pub struct Configuration {

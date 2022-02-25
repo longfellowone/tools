@@ -1,5 +1,3 @@
-// #![allow(dead_code, unused_variables, unused_imports)]
-
 use server::app;
 use server::config::Configuration;
 

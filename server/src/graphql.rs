@@ -3,14 +3,11 @@ use crate::loaders::employee::EmployeeLoader;
 use crate::mutations::MutationRoot;
 use crate::queries::QueryRoot;
 use async_graphql::dataloader::DataLoader;
-use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
-use async_graphql::{EmptyMutation, EmptySubscription, Schema};
+
+use async_graphql::{EmptySubscription, Schema};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
-use axum::extract::{Extension, TypedHeader};
-use axum::headers::authorization::Bearer;
-use axum::headers::Authorization;
-use axum::response;
-use axum::response::IntoResponse;
+use axum::extract::Extension;
+
 use sqlx::PgPool;
 
 pub type GraphqlSchema = Schema<QueryRoot, MutationRoot, EmptySubscription>;

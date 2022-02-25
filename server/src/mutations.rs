@@ -1,14 +1,7 @@
-use crate::app::AppConfig;
-
 use crate::resolvers::tool::Tool;
 use async_graphql::{Context, InputObject, Object, SimpleObject, ID};
-use chrono::Utc;
-use jsonwebtoken::{EncodingKey, Header};
-use sha3::{Digest, Sha3_256};
 use sqlx::PgPool;
-use std::ptr::hash;
 use uuid::Uuid;
-
 pub struct MutationRoot;
 
 #[Object]

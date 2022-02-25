@@ -1,4 +1,3 @@
-use crate::config::Configuration;
 use crate::graphql;
 use anyhow::Context;
 use axum::http::Method;
@@ -6,7 +5,7 @@ use axum::routing::post;
 use axum::{AddExtensionLayer, Router};
 use serde::Deserialize;
 use sqlx::PgPool;
-use std::net::SocketAddr;
+
 use tower::ServiceBuilder;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;

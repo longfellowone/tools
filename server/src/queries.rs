@@ -1,11 +1,7 @@
-use crate::postgres;
 use crate::resolvers::employee::Employee;
 use crate::resolvers::tool::Tool;
 use async_graphql::{Context, Object};
 use sqlx::PgPool;
-use std::thread::sleep;
-use std::time::Duration;
-use uuid::Uuid;
 
 pub struct QueryRoot;
 

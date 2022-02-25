@@ -1,8 +1,8 @@
 use crate::loaders::employee::EmployeeLoader;
 use crate::resolvers::employee::Employee;
-use async_graphql::dataloader::{DataLoader, Loader};
-use async_graphql::{Context, Object, SimpleObject, ID};
-use sqlx::PgPool;
+use async_graphql::dataloader::DataLoader;
+use async_graphql::{Context, Object, ID};
+
 use uuid::Uuid;
 
 pub struct Tool {

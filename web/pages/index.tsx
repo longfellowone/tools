@@ -8,17 +8,17 @@ const Index: NextPage = () => {
   return <ToolList />
 }
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const [client, ssrCache] = urqlClient()
+export const getServerSideProps: GetServerSideProps = async () => {
+  const [client, ssrCache] = urqlClient()
 
-//   await client?.query(EmployeeListDocument).toPromise()
-//   await client?.query(ToolListDocument).toPromise()
+  await client?.query(EmployeeListDocument).toPromise()
+  await client?.query(ToolListDocument).toPromise()
 
-//   return {
-//     props: {
-//       urqlState: ssrCache.extractData(),
-//     },
-//   }
-// }
+  return {
+    props: {
+      urqlState: ssrCache.extractData(),
+    },
+  }
+}
 
-export default withUrqlClient(urqlClientConfig, { ssr: true })(Index)
+export default withUrqlClient(urqlClientConfig, { ssr: false })(Index)

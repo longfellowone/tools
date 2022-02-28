@@ -8,7 +8,14 @@ const AssemblyItemDetails: NextPage<Props> = () => {
   const [{ data, error }] = useToolListQuery()
   useEmployeeListQuery()
 
-  // if (!data) return <div>Loading...</div>
+  if (!data)
+    return (
+      <div className="p-1 pt-2">
+        {[...Array(20)].map((_, i) => (
+          <div key={i} className="mb-2 h-12 rounded-md bg-zinc-800 last:mb-0"></div>
+        ))}
+      </div>
+    )
 
   if (error) return <div>Error: something went wrong.</div>
 

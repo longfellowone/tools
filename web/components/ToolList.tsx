@@ -1,11 +1,12 @@
 import { NextPage } from "next"
-import { useToolListQuery } from "../generated/graphql"
+import { useEmployeeListQuery, useToolListQuery } from "../generated/graphql"
 import ToolListItem from "./ToolItem"
 
 interface Props {}
 
 const AssemblyItemDetails: NextPage<Props> = () => {
   const [{ data, error }] = useToolListQuery()
+  useEmployeeListQuery()
 
   // if (!data) return <div>Loading...</div>
 

@@ -7,4 +7,4 @@ const Index: NextPage = () => {
   return <ToolList />
 }
 
-export default withUrqlClient(getClientConfig, { ssr: true })(Index)
+export default withUrqlClient(getClientConfig, { ssr: false })(Index)

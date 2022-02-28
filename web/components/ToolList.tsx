@@ -7,13 +7,13 @@ interface Props {}
 const AssemblyItemDetails: NextPage<Props> = () => {
   const [{ data, error }] = useToolListQuery()
 
-  if (!data) return <div>Loading...</div>
+  // if (!data) return <div>Loading...</div>
 
   if (error) return <div>Error: something went wrong.</div>
 
   return (
     <div className="p-1 pt-2">
-      {data.tools.map((tool) => (
+      {data?.tools.map((tool) => (
         <ToolListItem key={tool.id} tool={tool} />
       ))}
     </div>

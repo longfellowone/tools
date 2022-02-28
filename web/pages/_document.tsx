@@ -5,6 +5,7 @@ export default function Document() {
     <Html>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter&display=swap" />
         {/* Use display=option */}
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
         <link rel="preconnect" href={process.env.NEXT_PUBLIC_GRAPHQL_URL} crossOrigin="anonymous" />

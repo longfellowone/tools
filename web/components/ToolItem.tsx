@@ -10,7 +10,7 @@ interface Props {
 const ToolListItem: NextPage<Props> = ({ tool }) => {
   return (
     <>
-      <div className="mb-2 flex justify-between rounded-md bg-zinc-800 pl-2 last:mb-0">
+      <div className="mb-2 flex justify-between rounded-md bg-zinc-800 pl-2 last:mb-0 lg:mb-3 lg:pl-4">
         <Tool tool={tool} />
         <EmloyeeOption tool={tool} />
       </div>

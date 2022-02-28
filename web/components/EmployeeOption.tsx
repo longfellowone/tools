@@ -20,8 +20,9 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
   const [{ data }] = useEmployeeListQuery()
   const [mutateResult, mutate] = useAssignToolMutation()
 
-  if (mutateResult.error) return <div className="w-28 py-3 text-center text-red-500">Error</div>
-  if (mutateResult.fetching) return <div className="w-28 py-3 pl-4">Saving...</div>
+  if (mutateResult.error)
+    return <div className="w-28 py-3 text-center text-red-500 lg:w-36">Error</div>
+  if (mutateResult.fetching) return <div className="w-28 py-3 pl-4 lg:w-36">Saving...</div>
 
   const onSubmit: SubmitHandler<FormValues> = (form) => {
     mutate({ input: { toolId: tool.id, employeeId: form.employeeId } })
@@ -33,8 +34,8 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
         {...register("employeeId")}
         id="employeeId"
         name="employeeId"
-        className="w-28 rounded-md border-none bg-zinc-800 py-3 pl-4
-                   focus:outline-none focus:ring focus:ring-blue-500"
+        className="w-28 rounded-md border-none bg-zinc-800 py-3 pl-4 focus:outline-none
+                   focus:ring focus:ring-blue-500 lg:w-36 lg:text-2xl"
         value={tool.assignedTo.id}
       >
         {data?.employees.map((employee) => (

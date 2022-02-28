@@ -4,7 +4,11 @@ import { getClientConfig } from "../lib/getClientConfig"
 import { withUrqlClient } from "next-urql"
 
 const Index: NextPage = () => {
-  return <ToolList />
+  return (
+    <div className="flex md:text-2xl">
+      <ToolList />
+    </div>
+  )
 }
 
 export default withUrqlClient(getClientConfig, { ssr: false })(Index)

@@ -10,9 +10,9 @@ const AssemblyItemDetails: NextPage<Props> = () => {
 
   if (!data)
     return (
-      <div className="w-full p-1 pt-2 lg:m-auto lg:w-200">
+      <div className="w-full px-1 pt-2">
         {[...Array(20)].map((_, i) => (
-          <div key={i} className="mb-2 h-12 rounded-md bg-zinc-800 last:mb-0 lg:h-14"></div>
+          <div key={i} className="mb-2 h-9 rounded-md bg-zinc-800"></div>
         ))}
       </div>
     )
@@ -20,7 +20,7 @@ const AssemblyItemDetails: NextPage<Props> = () => {
   if (error) return <div>Error: something went wrong.</div>
 
   return (
-    <div className="w-full p-1 pt-2 lg:m-auto lg:w-200">
+    <div className="w-full px-1 pt-2 text-sm sm:m-auto sm:w-88">
       {data?.tools.map((tool) => (
         <ToolListItem key={tool.id} tool={tool} />
       ))}

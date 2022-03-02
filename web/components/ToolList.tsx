@@ -20,7 +20,7 @@ const AssemblyItemDetails: NextPage<Props> = () => {
   if (error) return <div>Error: something went wrong.</div>
 
   return (
-    <div className="w-full px-1 pt-2 text-sm sm:m-auto sm:w-88">
+    <div className="w-full px-1 pt-2 text-sm sm:m-auto sm:w-96">
       {data?.tools.map((tool) => (
         <ToolListItem key={tool.id} tool={tool} />
       ))}

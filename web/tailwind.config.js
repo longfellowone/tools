@@ -9,7 +9,7 @@ module.exports = {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       width: {
-        88: "22rem",
+        // 88: "22rem",
       },
     },
   },

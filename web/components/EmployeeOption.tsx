@@ -34,8 +34,9 @@ const EmloyeeOption: NextPage<Props> = ({ tool }) => {
         {...register("employeeId")}
         id="employeeId"
         name="employeeId"
-        className="w-24 rounded-md border-none bg-zinc-800 py-2 pr-8 pl-0 text-right text-sm focus:outline-none focus:ring focus:ring-blue-500"
+        className="w-24 rounded-md border-none bg-zinc-800 py-2 pr-8 pl-0  text-sm focus:outline-none focus:ring focus:ring-blue-500"
         value={tool.assignedTo.id}
+        dir="rtl"
       >
         {data?.employees.map((employee) => (
           <option key={employee.id} value={employee.id}>
